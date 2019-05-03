@@ -1,0 +1,103 @@
+<mat-card>
+	<mat-card-header>
+		<mat-card-title>Add Trip</mat-card-title>
+	</mat-card-header>
+
+	<mat-divider></mat-divider>
+
+	<mat-card-content>
+		<form class="form-container" autocomplete="off">
+			<mat-form-field hintLabel="Max 100 characters">
+				<input matInput #inputFrom placeholder="From" [formControl]="from" required>
+              <mat-hint align="end">{{inputFrom.value?.length || 0}} / 100</mat-hint>
+              <mat-error *ngIf="from.invalid">{{this.from.hasError('required') ? 'You must enter a value' : ''}}</mat-error>
+          </mat-form-field>
+
+           <mat-form-field hintLabel="Max 100 characters">
+              <input matInput #inputTo placeholder="To" [formControl]="to" required>
+              <mat-hint align="end">{{inputTo.value?.length || 0}} / 100</mat-hint>
+              <mat-error *ngIf="to.invalid">{{this.to.hasError('required') ? 'You must enter a value' : ''}}
+              </mat-error>
+          </mat-form-field>
+
+          <br><br>
+
+          <mat-form-field>
+            <input matInput [formControl]="startDate" [matDatepicker]="picker" placeholder="Start date"  disabled>
+            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+            <mat-datepicker #picker disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <mat-form-field>
+            <input matInput [formControl]="endDate" [matDatepicker]="picker2" placeholder="End date"  disabled>
+            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+            <mat-datepicker #picker2 disabled="false"></mat-datepicker>
+          </mat-form-field>
+
+          <label>People count: </label>
+          <mat-slider
+                #peopleCount
+                name="peopeCount"
+                class="example-margin"
+                [disabled]="false"
+                [max]="100"
+                [min]="0"
+                [step]="1"
+                [thumbLabel]="true"
+                [tickInterval]="10"
+                [(ngModel)]="peopeCount"
+                [vertical]="vertical">
+            </mat-slider>
+        </form>
+     </mat-card-content>
+     <mat-card-actions>
+        <button mat-raised-button (click)="clear()" >Clear</button>
+        <button mat-raised-button color="primary" (click)="addTrip()">Save</button>
+      </mat-card-actions>
+  </mat-card>
+  
+  <mat-card style="margin-top: 10px;">
+      	<mat-card-header>
+          <mat-card-title>Trips</mat-card-title>
+        </mat-card-header>
+        <mat-divider></mat-divider>
+        <mat-card-content style="margin-top: 10px !important;">
+          <mat-form-field class="mat-form-field-filter">
+            <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Filter">
+          </mat-form-field>
+            <table mat-table [dataSource]="dataSource" matSort class="mat-elevation-z8"> 
+              <ng-container matColumnDef="from">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> From </th>
+                <td mat-cell *matCellDef="let element"> {{element.from}} </td>
+              </ng-container>
+              <ng-container matColumnDef="to">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> To </th>
+                <td mat-cell *matCellDef="let element"> {{element.to}} </td>
+              </ng-container>
+              <ng-container matColumnDef="startDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> Start Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.startDate}} </td>
+              </ng-container>
+              <ng-container matColumnDef="endDate">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> End Date </th>
+                <td mat-cell *matCellDef="let element"> {{element.endDate}} </td>
+              </ng-container>
+              <ng-container matColumnDef="peopleCount">
+                <th mat-header-cell *matHeaderCellDef mat-sort-header> People Count </th>
+                <td mat-cell *matCellDef="let element"> {{element.peopleCount}} </td>
+              </ng-container>
+
+              <ng-container matColumnDef="delete">
+                  <th mat-header-cell *matHeaderCellDef>Action</th>
+                  <td mat-cell *matCellDef="let element">
+                      <button mat-icon-button (click)="delete(element)">
+                          <mat-icon title="Delete">delete</mat-icon>
+                      </button>
+                  </td>
+              </ng-container>
+
+              <tr mat-header-row *matHeaderRowDef="displayedColumns; sticky: true"></tr>
+              <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+            </table>
+        </mat-card-content>
+  </mat-card>

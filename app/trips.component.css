@@ -1,0 +1,33 @@
+table {
+  width: 100%;
+}
+
+.example-button-row button:not(:first-child){
+    margin-left: 10px;
+}
+
+.mat-form-field{
+    margin-bottom: 10px;
+}
+
+.example-button-row{
+  padding-top: 10px;
+}
+
+.form-container{
+    padding: 20px;
+    width: 80%;
+    flex-direction: column;
+    display: flex;
+    margin: 0 auto
+}
+
+.mat-table{
+  margin-top: 10px;
+}
+
+
+.mat-form-field-filter {
+  font-size: 14px;
+  width: 100%;
+}
