@@ -86,7 +86,7 @@ export class TripsComponent implements OnInit {
         id: (new Date()).getMilliseconds()
       }
     );
-    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.refreshList();
     this.openSnackBar('Trip saved successfully.', 'OK');
     this.clear();
   }
@@ -113,7 +113,7 @@ export class TripsComponent implements OnInit {
             idx++;
           }
         );
-        this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+        this.refreshList();
         this.openSnackBar('Trip deleted successfully.', 'OK');
       }
     });
@@ -126,6 +126,11 @@ export class TripsComponent implements OnInit {
     this.endDate.setValue(new Date());
     this.peopeCount = 1;
     this.fromField.nativeElement.focus();
+  }
+
+  refreshList() {
+    this.dataSource = new MatTableDataSource(ELEMENT_DATA);
+    this.dataSource.sort = this.sort;
   }
 
 }
